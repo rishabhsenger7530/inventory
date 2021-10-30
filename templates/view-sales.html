@@ -1,0 +1,194 @@
+{% extends 'header.html'%} {%block body%}
+<div class="dashboard-wrapper">
+    <div class="container-fluid  dashboard-content">
+        <!-- ============================================================== -->
+        <!-- pageheader -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="page-header">
+                    <h2 class="pageheader-title">View Orders </h2>
+                    <p class="pageheader-text"></p>
+                    <div class="page-breadcrumb">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Order</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Create Order</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end pageheader -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <!-- ============================================================== -->
+            <!-- validation form -->
+            <!-- ============================================================== -->
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="card">
+                    <h5 class="card-header">Create Order</h5>
+                      {% for message in messages%}
+                        <h3 align="center" style="color: red;">{{message}}</h3>
+                    {% endfor %}
+                    <div class="card-body">
+                      
+                     {% for i in sales%}
+                            <div class="form-row">
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
+                                    <h5 class="card-header">Billing Address</h5>
+                                    <label for="validationCustom03">Firm</label>
+                                    <input type="text" class="form-control" name="b_firm" id="b_firm" placeholder="Firm" value="{{i.b_firmname}}" readonly>
+                                    
+                                    <br>
+                                    <label for="validationCustom03">Address1</label>
+                                    <input type="text" class="form-control" name="b_address" id="b_address" value="{{i.b_addr1}}" placeholder="Address1" readonly>
+                                   
+                                    <br>
+                                    <label for="validationCustom03">Address2</label>
+                                    <input type="text" class="form-control" name="b_address2" id="b_address2" value="{{i.b_addr2}}" placeholder="City" readonly>
+                                   
+                                    <br>
+                                    <label for="validationCustom03">City</label>
+                                    <input type="text" class="form-control" name="b_city" id="b_city" value="{{i.b_city}}" placeholder="City" readonly>
+                                    
+                                    <label for="validationCustom03">State</label>
+                                    <input type="text" class="form-control" name="b_state" id="b_state" value="{{i.b_state}}" placeholder="State" readonly>
+                                    
+                                    <label for="validationCustom03">Zip</label>
+                                    <input type="text" class="form-control" name="b_zip" id="b_zip" value="{{i.b_zip}}" placeholder="Zip" readonly>
+                                   
+                                    <label for="validationCustom03">Country</label>
+                                    <input type="text" value="{{i.b_country}}" class="form-control" name="b_country" id="b_country" placeholder="Country" readonly>
+                                   
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
+                                    <h5 class="card-header">Shipping Address(If Not The Same)
+                                       &nbsp; &nbsp; <input type ="checkbox"  value="checkboxval" id="checkboxval" onchange="checkbox(this)">
+                                    </h5>
+                                    <label for="validationCustom03">Firm</label>
+                                    <input type="text" class="form-control" name="s_firm" id="s_firm" value="{{i.s_firmname}}" placeholder="Firm" readonly>
+                                  
+                                    <br>
+                                  
+                                    <br>
+                                    <label for="validationCustom03">Address1</label>
+                                    <input type="text" class="form-control" name="s_address" id="s_address" value="{{i.s_addr1}}" placeholder="Address1" readonly>
+                                  
+                                    <br>
+                                    <label for="validationCustom03">Address2</label>
+                                    <input type="text" class="form-control" name="s_address2" id="s_address2" value="{{i.s_addr2}}" placeholder="City" readonly>
+                                   
+                                    <br>
+                                    <label for="validationCustom03">City</label>
+                                    <input type="text" class="form-control" name="s_city" id="s_city" placeholder="City" value="{{i.s_city}}" readonly>
+                                
+                                    <label for="validationCustom03">State</label>
+                                    <input type="text" class="form-control" name="s_state" id="s_state" placeholder="State" value="{{i.s_state}}" readonly>
+                                    
+                                    <label for="validationCustom03">Zip</label>
+                                    <input type="text" class="form-control" name="s_zip" id="s_zip" placeholder="Zip" value="{{i.s_zip}}" readonly>
+                                   
+                                    <label for="validationCustom03">Country</label>
+                                    <input type="text" class="form-control" name="s_country" id="s_country" placeholder="Country" value="{{i.s_country}}" readonly>
+                                    
+                                </div>
+                            </div>
+                        
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="validationCustom03">Date</label>
+                                        <input type="text" class="form-control" name="date" id="validationCustom03" placeholder="Date" value="{{i.b_date}}" readonly>
+                                        <label for="validationCustom03">Purchase Order</label>
+                                        <input type="text" class="form-control" name="purchase_order" id="validationCustom03" placeholder="Buyer" readonly value="{{i.b_purchase_order}}" readonly> </div>
+                                    <div class="col-md-6">
+                                        <label for="validationCustom03">Buyer</label>
+                                        <input type="text" class="form-control" name="buyer" id="validationCustom03" placeholder="Buyer" value="{{i.b_buyer}}" readonly>
+                                        <label for="validationCustom03">Terms</label>
+                                        <input type="text" class="form-control" name="terms" id="validationCustom03" placeholder="Terms" value="{{i.b_tirms}}" readonly> </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="validationCustom03">Main Tel.</label>
+                                        <input type="text" class="form-control" name="main_tel" id="validationCustom03" placeholder="Mail Tel." value="{{i.contact1}}" readonly>
+                                        <label for="validationCustom03">Email</label>
+                                        <input type="text" class="form-control" name="email" id="validationCustom03" placeholder="Email" value="{{i.email}}" readonly> </div>
+                                    <div class="col-md-6">
+                                        <label for="validationCustom03">Alt Tel.</label>
+                                        <input type="text" class="form-control" name="alt_tel" id="validationCustom03" placeholder="Alt Tel." value="{{i.contact2}}" readonly> </div>
+                                </div>
+                            </div>
+                        </div>
+
+                      
+
+  {% endfor %} 
+
+<hr><br>
+
+{% for k in product%}
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="validationCustom03">Item</label>
+                            <select class="form-control selectitem"  name="item[]" id="selectitem" readonly>
+                                
+                            <option >{{k.9}}</option>
+                             
+                            </select>
+                           
+                        </div>
+                        <div class="col-md-3">
+                            <label for="validationCustom03">Product Description</label>
+                            <input type="text" class="form-control" name="product_desc[]" id="product_desc" placeholder="Product Description" readonly value="{{k.3}}">
+                        </div>
+                           <div class="col-md-2">
+                            <label for="validationCustom03">Unit Price</label>
+                            <input type="text" class="form-control" name="unit_price[]" id="unit_price" value="{{k.4}}" readonly>
+                        </div>
+                       
+                        <div class="col-md-1">
+                            <label for="validationCustom03">Qty</label>
+                            <input type="text" class="form-control" name="qty[]" id="qty" placeholder="Qty." value="{{k.1}}"  readonly>
+                        </div>
+                        
+                         <div class="col-md-2">
+                            <label for="validationCustom03">O/U</label>
+                            <input type="text" class="form-control" name="ou[]" id="validationCustom03" placeholder="O/U" value="{{k.2}}"  readonly>
+                        </div>
+                        
+                     
+                        <div class="col-md-2">
+                            <label for="validationCustom03">Extended Total</label>
+                            <input type="text" class="form-control extended_total" name="extended_total[]" id="extended_total" placeholder="Extended Total" value="{{k.5}}"  readonly>
+                        </div>
+                    </div>
+                    
+                  
+
+
+      {% endfor %}                  
+                    </div>
+                </div>
+            </div>
+       
+
+            <!-- ============================================================== -->
+            <!-- end validation form -->
+            <!-- ============================================================== -->
+        </div>
+    </div>
+
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script> -->
+ 
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->{%endblock%}

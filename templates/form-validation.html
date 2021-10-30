@@ -1,0 +1,390 @@
+{% extends 'header.html'%} {%block body%}
+<div class="dashboard-wrapper">
+    <div class="container-fluid  dashboard-content">
+        <!-- ============================================================== -->
+        <!-- pageheader -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="page-header">
+                    <h2 class="pageheader-title">Create Orders </h2>
+                    <p class="pageheader-text"></p>
+                    <div class="page-breadcrumb">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Order</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Create Order</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end pageheader -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <!-- ============================================================== -->
+            <!-- validation form -->
+            <!-- ============================================================== -->
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="card">
+                    <h5 class="card-header">Create Order</h5>
+                      {% for message in messages%}
+                        <h3 align="center" style="color: red;">{{message}}</h3>
+                    {% endfor %}
+                    <div class="card-body">
+                        <form class="needs-validation" action="/create-sales/" method="post" >
+                            <div class="form-row">
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
+                                    <h5 class="card-header">Billing Address</h5>
+                                    <label for="validationCustom03">Firm</label>
+                                    <input type="text" class="form-control" name="b_firm" id="b_firm" placeholder="Firm" required>
+                                    <div class="invalid-feedback"> Please provide a valid Firm. </div>
+                                    <br>
+                                    <br>
+                                    <label for="validationCustom03">Address1</label>
+                                    <input type="text" class="form-control" name="b_address" id="b_address" placeholder="Address1" required>
+                                    <div class="invalid-feedback"> Please provide a valid Address1. </div>
+                                    <br>
+                                    <label for="validationCustom03">Address2</label>
+                                    <input type="text" class="form-control" name="b_address2" id="b_address2" placeholder="City" required>
+                                    <div class="invalid-feedback"> Please provide a valid Address2. </div>
+                                    <br>
+                                    <label for="validationCustom03">City</label>
+                                    <input type="text" class="form-control" name="b_city" id="b_city" placeholder="City" required>
+                                    <div class="invalid-feedback"> Please provide a valid city. </div>
+                                    <label for="validationCustom03">State</label>
+                                    <input type="text" class="form-control" name="b_state" id="b_state" placeholder="State" required>
+                                    <div class="invalid-feedback"> Please provide a valid State. </div>
+                                    <label for="validationCustom03">Zip</label>
+                                    <input type="text" class="form-control" name="b_zip" id="b_zip" placeholder="Zip" required>
+                                    <div class="invalid-feedback"> Please provide a valid Zip. </div>
+                                    <label for="validationCustom03">Country</label>
+                                    <input type="text" class="form-control" name="b_country" id="b_country" placeholder="Country" required>
+                                    <div class="invalid-feedback"> Please provide a valid Country. </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
+                                    <h5 class="card-header">Shipping Address(If Not The Same)
+                                       &nbsp; &nbsp; <input type ="checkbox"  value="checkboxval" id="checkboxval" onchange="checkbox(this)">
+                                    </h5>
+                                    <label for="validationCustom03">Firm</label>
+                                    <input type="text" class="form-control" name="s_firm" id="s_firm" placeholder="Firm" >
+                                    <div class="invalid-feedback"> Please provide a valid Firm. </div>
+                                    <br>
+                                  
+                                    <br>
+                                    <label for="validationCustom03">Address1</label>
+                                    <input type="text" class="form-control" name="s_address" id="s_address" placeholder="Address1" >
+                                    <div class="invalid-feedback"> Please provide a valid Address1. </div>
+                                    <br>
+                                    <label for="validationCustom03">Address2</label>
+                                    <input type="text" class="form-control" name="s_address2" id="s_address2" placeholder="City" >
+                                    <div class="invalid-feedback"> Please provide a valid Address2. </div>
+                                    <br>
+                                    <label for="validationCustom03">City</label>
+                                    <input type="text" class="form-control" name="s_city" id="s_city" placeholder="City" >
+                                    <div class="invalid-feedback"> Please provide a valid city. </div>
+                                    <label for="validationCustom03">State</label>
+                                    <input type="text" class="form-control" name="s_state" id="s_state" placeholder="State" >
+                                    <div class="invalid-feedback"> Please provide a valid State. </div>
+                                    <label for="validationCustom03">Zip</label>
+                                    <input type="text" class="form-control" name="s_zip" id="s_zip" placeholder="Zip" >
+                                    <div class="invalid-feedback"> Please provide a valid Zip. </div>
+                                    <label for="validationCustom03">Country</label>
+                                    <input type="text" class="form-control" name="s_country" id="s_country" placeholder="Country" >
+                                    <div class="invalid-feedback"> Please provide a valid Country. </div>
+                                </div>
+                            </div>
+                        
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="validationCustom03">Date</label>
+                                        <input type="date" class="form-control" name="date" id="validationCustom03" placeholder="Date" required>
+                                        <label for="validationCustom03">Purchase Order</label>
+                                        <input type="text" class="form-control" name="purchase_order" id="validationCustom03" placeholder="Buyer" required> </div>
+                                    <div class="col-md-6">
+                                        <label for="validationCustom03">Buyer</label>
+                                        <input type="text" class="form-control" name="buyer" id="validationCustom03" placeholder="Buyer" required>
+                                        <label for="validationCustom03">Terms</label>
+                                        <input type="text" class="form-control" name="terms" id="validationCustom03" placeholder="Terms" required> </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="validationCustom03">Main Tel.</label>
+                                        <input type="text" class="form-control" name="main_tel" id="validationCustom03" placeholder="Mail Tel." required>
+                                        <label for="validationCustom03">Email</label>
+                                        <input type="text" class="form-control" name="email" id="validationCustom03" placeholder="Email" required> </div>
+                                    <div class="col-md-6">
+                                        <label for="validationCustom03">Alt Tel.</label>
+                                        <input type="text" class="form-control" name="alt_tel" id="validationCustom03" placeholder="Alt Tel." required> </div>
+                                </div>
+                            </div>
+                        </div>
+
+                      
+
+
+
+<hr><br>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="validationCustom03">Item</label>
+                            <select class="form-control selectitem"  name="item[]" id="selectitem" required>
+                                <option value="">Select Item</option>
+                                {% for i,j in mylist%}
+                                 <option value="{{i}}">{{j}}</option>
+                                {% endfor %}
+                            </select>
+                           
+                        </div>
+                        <div class="col-md-3">
+                            <label for="validationCustom03">Product Description</label>
+                            <input type="text" class="form-control" name="product_desc[]" id="product_desc" placeholder="Product Description" readonly required>
+                        </div>
+                           <div class="col-md-2">
+                            <label for="validationCustom03">Unit Price</label>
+                            <input type="text" class="form-control" name="unit_price[]" id="unit_price" placeholder="Unit Price" required readonly>
+                        </div>
+                       
+                        <div class="col-md-1">
+                            <label for="validationCustom03">Qty</label>
+                            <input type="text" class="form-control" name="qty[]" id="qty" placeholder="Qty." required>
+                        </div>
+                        
+                         <div class="col-md-2">
+                            <label for="validationCustom03">O/U</label>
+                            <input type="text" class="form-control" name="ou[]" id="validationCustom03" placeholder="O/U" required>
+                        </div>
+                        
+                     
+                        <div class="col-md-2">
+                            <label for="validationCustom03">Extended Total</label>
+                            <input type="text" class="form-control extended_total" name="extended_total[]" id="extended_total" placeholder="Extended Total" required>
+                        </div>
+                    </div>
+                    
+                       <div class="multiple-points-container">
+                                    <div class="multiple-points">
+                                        <!-- Extra points will be added here -->
+                                    </div>
+                                    <div class="text-end mt-3">
+                                        <button class="btn btn-outline-primary add-more-points border-2 text-md-right" type="button" onclick="addNewPoint(this)" style="">
+                                            <i class="far fa-plus me-2"></i> Add more
+                                        </button>
+                                    </div>
+
+                                    <div class=" text-right">
+                                        <b>Total:  </b><span id="totalcount">  </span>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                            <button class="btn btn-primary" type="submit">Submit form</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+            <!-- ============================================================== -->
+            <!-- end validation form -->
+            <!-- ============================================================== -->
+        </div>
+    </div>
+    {{itemname}}
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script> -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+    var item     = {{itemid}};
+    var itemname = "{{itemname|escapejs}}";
+    services = itemname.replaceAll("'",'"')
+    a =JSON.parse(services)
+    itemid_list  = '<option value="">Select</option>';
+    console.log((a.length))
+    for(var x=0; x<item.length; x++){
+        itemid_list = itemid_list+ "<option value='"+item[x]+"'>"+a[x]+"</option>"
+    }
+    
+    const maxPoints = 5;
+    let count     = 1;
+        // Adds new point
+
+         const deleteThisPoint = (target) => {
+            target.parentNode.remove();
+        };
+
+        const addNewPoint = (target) => {
+            const parentContainer = target.parentNode.parentNode;
+            const addIn = parentContainer.querySelector('.multiple-points');
+            const childCounts = addIn.childElementCount;
+            
+             if(childCounts > maxPoints - 1) {
+                alert('maximum limit reached');
+            } else {
+                const data = $(`
+                    <div class="d-flex">
+                    <div class="form-group mt-3 d-flex">
+                     <select class="form-control selectitem"  name="item[]" id="selectitem${count}" required onchange="myfunc(${count})">
+                           ${itemid_list}   
+                    </select>
+                    </div>
+                    &nbsp;&nbsp;
+                    <div class="form-group mt-3 d-flex">
+                       
+                            <input type="text" class="form-control" name="product_desc[]" id="product_desc${count}" placeholder="Product Description" readonly required>
+                      
+                    </div>&nbsp;&nbsp;
+                    <div class="form-group mt-3 d-flex">
+                        <input type="text" id="unit_price${count}" name="unit_price[]" placeholder="Unit Price" class="form-control" required>
+                      
+                    </div>&nbsp;&nbsp;
+                     <div class="form-group mt-3 d-flex">
+                        <input type="text" id="qty${count}" name="qty[]" placeholder="Qty." class="form-control" required onkeyup="counttotal(${count})">
+                      
+                    </div>&nbsp;&nbsp;
+                    <div class="form-group mt-3 d-flex">
+                        <input type="text" id="course_headline" name="ou[]" placeholder="O/U" class="form-control" required>
+                      
+                    </div>&nbsp;&nbsp;
+                   
+                    
+                    <div class="form-group mt-3 d-flex">
+                        <input type="text" id="extended_total${count}" name="extended_total[]" placeholder="Extended Total" class="form-control extended_total" required>
+                        &nbsp;&nbsp;
+                      
+                    </div>
+                    <button class="btn glixcel-btn-outline-red ms-2" type="button" onclick="deleteThisPoint(this)" style="height:38px;margin-top:15px;">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                `).hide();
+
+                $(addIn).append(data);
+                count = count+1;
+            }
+            
+        };
+
+
+
+
+$('.selectitem').on('change', function(e) {
+    var option = document.getElementById('selectitem').value;
+    
+    $.ajax({
+            data: {
+                option: option
+            },
+            type: 'POST',
+            url: '/fetchitems/'
+        })
+        .done(function(data) {
+         document.getElementById('product_desc').value=data['models_to_return'][0]['production_desc']
+         document.getElementById('unit_price').value=data['models_to_return'][0]['unitprice']
+       
+      });
+          });   
+
+    function myfunc(argument) {
+          opt_val = document.getElementById('selectitem'+argument).value;
+           $.ajax({
+            data: {
+                option: opt_val
+            },
+            type: 'POST',
+            url: '/fetchitems/'
+        })
+        .done(function(data) {
+         document.getElementById('product_desc'+argument).value=data['models_to_return'][0]['production_desc']
+         document.getElementById('unit_price'+argument).value=data['models_to_return'][0]['unitprice']
+       
+      });
+       }  
+
+
+$("#qty").keyup(function(){
+  unitprice = $('#unit_price').val();
+  qty       = $(this).val();
+  var total = unitprice*qty;
+  document.getElementById('extended_total').value = total;
+
+ var sum = 0;
+$('input.extended_total').each(function() {
+    var num = parseInt(this.value, 10);
+    if (!isNaN(num)) {
+        sum += num;
+    }
+});
+$("#totalcount").text(String(sum));
+});
+
+
+function counttotal(argument) {
+  unitprice = $('#unit_price'+argument).val();
+  qty       = $('#qty'+argument).val();
+  var total = unitprice*qty;
+  document.getElementById('extended_total'+argument).value = total;
+   var sum = 0;
+  $('input.extended_total').each(function() {
+    var num = parseInt(this.value, 10);
+    if (!isNaN(num)) {
+        sum += num;
+    }
+});
+$("#totalcount").text(String(sum));
+}
+
+
+function checkbox(checkbox) {
+    // checkval = $(this).val();
+     if (checkbox.checked)
+    {
+      document.getElementById('s_firm').value =document.getElementById('b_firm').value;
+      document.getElementById('s_address').value= document.getElementById('b_address').value;
+      document.getElementById('s_address2').value= document.getElementById('b_address2').value;
+      document.getElementById('s_city').value= document.getElementById('b_city').value;
+      document.getElementById('s_state').value= document.getElementById('b_state').value;
+      document.getElementById('s_zip').value= document.getElementById('b_zip').value;
+      document.getElementById('s_country').value= document.getElementById('b_country').value;
+      
+    }else{
+      document.getElementById('s_firm').value ='';
+      document.getElementById('s_address').value= '';
+      document.getElementById('s_address2').value= '';
+      document.getElementById('s_city').value= '';
+      document.getElementById('s_state').value= '';
+      document.getElementById('s_zip').value= '';
+      document.getElementById('s_country').value='';
+      
+    }
+}
+</script>
+
+
+
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->{%endblock%}

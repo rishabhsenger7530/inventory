@@ -1,0 +1,116 @@
+{% extends 'header.html'%} {%block body%}
+<div class="dashboard-wrapper">
+    <div class="container-fluid  dashboard-content">
+        <!-- ============================================================== -->
+        <!-- pageheader -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="page-header">
+                    <h2 class="pageheader-title">Followup Orders </h2>
+                    <p class="pageheader-text"></p>
+                    <div class="page-breadcrumb">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Order</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Followup Order</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end pageheader -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <!-- ============================================================== -->
+            <!-- validation form -->
+            <!-- ============================================================== -->
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="card">
+                    <h5 class="card-header">Followup Order</h5> {% for message in messages%}
+                    <h3 align="center" style="color: red;">{{message}}</h3> {% endfor %}
+                    <div class="card-body"> {% for i in sales%}
+                        <div class="form-row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
+                                <label for="validationCustom03">Firm</label>
+                                <input type="text" class="form-control" name="b_firm" id="b_firm" placeholder="Firm" value="{{i.b_firmname}}" readonly> </div>
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
+                                <label for="validationCustom03">Firm</label>
+                                <input type="text" class="form-control" name="b_address" id="b_address" value="{{i.b_addr1}}- {{i.b_zip}}, {{i.b_city}}, {{i.b_state}}- {{i.b_country}}" placeholder="Address1" readonly>
+                                <br> </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="validationCustom03">Date</label>
+                                        <input type="text" class="form-control" name="date" id="validationCustom03" placeholder="Date" value="{{i.b_date}}" readonly>
+                                        <label for="validationCustom03">Purchase Order</label>
+                                        <input type="text" class="form-control" name="purchase_order" id="validationCustom03" placeholder="Buyer" readonly value="{{i.b_purchase_order}}" readonly> </div>
+                                    <div class="col-md-6">
+                                        <label for="validationCustom03">Buyer</label>
+                                        <input type="text" class="form-control" name="buyer" id="validationCustom03" placeholder="Buyer" value="{{i.b_buyer}}" readonly>
+                                        <label for="validationCustom03">Terms</label>
+                                        <input type="text" class="form-control" name="terms" id="validationCustom03" placeholder="Terms" value="{{i.b_tirms}}" readonly> </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="validationCustom03">Main Tel.</label>
+                                        <input type="text" class="form-control" name="main_tel" id="validationCustom03" placeholder="Mail Tel." value="{{i.contact1}}" readonly>
+                                        <label for="validationCustom03">Email</label>
+                                        <input type="text" class="form-control" name="email" id="validationCustom03" placeholder="Email" value="{{i.email}}" readonly> </div>
+                                    <div class="col-md-6">
+                                        <label for="validationCustom03">Alt Tel.</label>
+                                        <input type="text" class="form-control" name="alt_tel" id="validationCustom03" placeholder="Alt Tel." value="{{i.contact2}}" readonly> </div>
+                                </div>
+                            </div>
+                        </div> {% endfor %}
+                        <hr>
+                        <br>
+                        <h2>All Notes</h2>
+                        <hr>
+
+                        <div class="row">
+                            {% for i in followupdata%}
+                            <div class="col-md-10 mt-2">
+                                <textarea class="form-control" name="addnotes" readonly>{{i.content}}</textarea>
+                            </div>
+                            <div class="col-md-2 mt-2">
+                                <input type="text" class="form-control" value="{{i.date}}" name="" readonly style="height:80px;">
+                            </div>
+                            {% endfor %}
+
+                            
+                        </div>
+                        <br>
+<h2>All Notes</h2>
+<hr>
+                    <form action="" method="post">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <textarea class="form-control" name="addnotes" required></textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="submit" class="btn btn-primary btn-lg form-control" value="Add Notes"> </div>
+                        </div>
+                    </form>
+
+
+
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end validation form -->
+                <!-- ============================================================== -->
+            </div>
+        </div>
+        <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script> -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->{%endblock%}

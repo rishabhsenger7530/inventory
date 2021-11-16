@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	
+	h2,
+	h3,
+	h4,
+	h5,
+	p,
+	ul,
+	li {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	
+	body {
+		background: #f0f6ff;
+		font-family: arial;
+	}
+	
+	.containerbox {
+		margin: 45px auto;
+		display: block;
+		max-width: 1170px;
+		background: #fff;
+		padding: 15px;
+	}
+	
+	.topsection div {
+		display: inline-block;
+	}
+	
+	.topsection div.lefsection {
+		float: left;
+		display: inline-block;
+		width: 330px;
+	}
+	
+	.topsection div.rightsection {
+		float: right;
+		display: inline-block;
+		margin-top: 35px;
+	}
+	
+	.smallbox1,
+	.smallbox2 {
+		width: 47%;
+	}
+	
+	.smallbox1 h3 {
+		font-size: 13px;
+		margin-bottom: 5px;
+	}
+	
+	.smallbox1 p {
+		font-size: 11px;
+		margin-bottom: 5px;
+	}
+	
+	.tablebox table tr td,
+	.rightsection table tr td {
+		border: 1px solid #ccc;
+		width: 131px;
+		font-size: 12px;
+		padding: 3px;
+		border-collapse: collapse;
+	}
+	
+	table,
+	th,
+	td {
+		border-collapse: collapse;
+	}
+	
+	.billboxsec {
+		width: 100%;
+		background: #0e4ca5;
+		padding: 10px 10px;
+		color: #fff;
+		font-size: 13px;
+		letter-spacing: 1px;
+	}
+	
+	.tdback {
+		background: #afafaf;
+	}
+	
+	.btncolor {
+		background: #000;
+		color: #fff;
+		padding: 10px;
+		border: none;
+		margin: 15px 0;
+	}
+	
+	.tablebox table {
+		width: 100%;
+	}
+	
+	.tablebox table tr th {
+		color: #fff;
+		background: #0e4ca5;
+		padding: 8px;
+		font-size: 12px;
+		font-weight: 400;
+		text-align: left;
+	}
+	
+	@media print {
+		.billboxsec {
+			background: #0e4ca5;
+			color: #fff;
+		}
+		.tablebox table tr td,
+		.rightsection table tr td {
+			border: 1px solid #ccc;
+		}
+		.tdback {
+			background: #afafaf;
+		}
+		.btncolor {
+			background: #000;
+			color: #fff;
+		}
+		.tablebox table tr th {
+			color: #fff;
+			background: #0e4ca5;
+		}
+	}
+	@page { size: auto;  margin: 0mm; }
+	</style>
+</head> {%load static %}
+
+<body style="-webkit-print-color-adjust: exact;" > 
+	<div class="containerbox">
+		<div class="topsection">
+			<div class="lefsection"> <img src="{% static 'assets/images/red_logo.jpg'%}" alt="" style="width: 240px;">
+				<div class="smallbox1" style="width: 170px;">
+					<h3 style="font-style: italic;">"where it's cool to be tool"</h3>
+					<p> 8834 RESEDA BLVD SUITE 3023 </p>
+					<p> NORTHRIDGE, CA 91324</p>
+					<p> TOLL FREE: 833-876-2633 </p>
+				</div>
+				<div class="smallbox2"> <img src="{% static 'assets/images/big_logo.jpg'%} " alt="" style="width: 96px;"> </div>
+				<div class="billboxsec" style="margin-top:10px;height:23px;padding:6px;"> <span >Bill To:</span> <span></span> </div> <span style="font-size:13px;"><b>Firm Name: </b>{{sales.b_firmname}}</span> <br><span style="font-size:13px;"><b>Address: </b>{{sales.b_city}}&nbsp;{{sales.b_state}}&nbsp;{{sales.b_zip}}</span> </div>
+			<div class="rightsection" style="width:270px; margin-top:10px;">
+				<table>
+					<tr style="height: 20px;">
+						<td><b>Date</b></td>
+						<td>{{today}}</td>
+					</tr>
+					<tr style="height: 20px;">
+						<td class="tdback"><b>INVOICE#</b></td>
+						<td class="tdback"></td>
+					</tr>
+					<tr style="height: 20px;">
+						<td><b>Customer ID</b></td>
+					</tr>
+				</table>
+				<div class="billboxsec" style="margin-top:88px; height:23px;padding:6px;"> <span>SHIP TO(if different):</span> <span></span> </div> <span style="font-size:13px;"><b>Firm Name: </b>{{sales.b_firmname}}</span> <br><span style="font-size:13px;"><b>Address:  </b>{{sales.s_city}}&nbsp;{{sales.s_state}}&nbsp;{{sales.s_zip}}</span> </div>
+		</div>
+		<div style="clear: both"></div>
+		<button class="btncolor">INVOICE</button>
+		<div class="tablebox">
+			<div class="phonsec" style="margin:5px 0;"><span>PHONE:</span></div>
+			<table>
+				<tr style="height: 20px;">
+					<th>SALESPERSON</th>
+					<th>P.O.#</th>
+					<th>SHIP DATE</th>
+					<th>SHIPPING TYPE</th>
+					<th>F.O.B.</th>
+					<th>TERMS</th>
+				</tr>
+				<tr style="height: 20px;">
+					<td>{{request.user.first_name}} {{request.user.last_name}}</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>{{sales.b_tirms}}</td>
+				</tr>
+			</table>
+			<table id="item" style="margin-top:9px;background-image: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)),url('{% static 'assets/images/combo_Logo.jpg'%}');background-repeat: no-repeat;background-size: 28% 73%;    background-position: center;background-position-y: 87px;">
+				<tr style="height: 20px;">
+					<th>ITEM #</th>
+					<th style="width: 40%">DESCRIPTION</th>
+					<th>OTY</th>
+					<th>UNIT PRICE</th>
+					<th>EXTENDED PRICE</th>
+				</tr> {% for i in product_order%}
+				<tr style="height: 20px;">
+					<td>{{i.item.item}}.00</td>
+					<td>{{i.production_desc}}</td>
+					<td>{{i.quantity}}</td>
+					<td>{{i.unitprice}}</td>
+					<td style="background: #e8f1ff;">$<span class="subtotalcount">{{i.extend}}</span></td>
+				</tr> {% endfor %}
+			
+				
+				<tr style="height: 20px;">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td style="background: #e8f1ff;">0.00</td>
+				</tr>
+				<tr style="height: 20px;">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td style="background: #e8f1ff;">0.00</td>
+				</tr>
+				<tr style="height: 20px;">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td style="background: #e8f1ff;">0.00</td>
+				</tr>
+				<tr style="height: 20px;">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td style="background: #e8f1ff;">0.00</td>
+				</tr>
+				<tr style="height: 20px;">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td style="background: #e8f1ff;">0.00</td>
+				</tr>
+				<tr style="height: 20px;">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td style="background: #e8f1ff;">0.00</td>
+				</tr>
+				<tr style="height: 20px;">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td style="background: #e8f1ff;">0.00</td>
+				</tr>
+				<tr style="height: 20px;">
+					<td colspan="3"></td>
+					<td></td>
+					<td style="background: #e8f1ff;">0.00</td>
+				</tr>
+				<tr style="height: 20px;">
+					<td colspan="3"><b>PERTINENT FAQS</b></td>
+					<td style="font-size:10px"><b>SUBTOTAL</b></td>
+					<td style="background: #e8f1ff;" id="" class="totalcount subtotal"></td>
+					<input type="text" class="inputsubtotal" value="">
+				</tr>
+				<tr style="height: 20px;">
+					<td colspan="3" style="font-size:10px;"><b>1:</b>TOTAL PAYMENT IS DUE 15 DAYS FROM INVOICE DATE. </td>
+					<td style="font-size:10px"><b>TAX RATE</b></td>
+					<td style="background: #e8f1ff;" class="totalcount">$0.00</td>
+				</tr>
+				<tr style="height: 20px;">
+					<td colspan="3" style="font-size:10px;"><b>2:</b>MAKE CHECKS PAYABLE TO THE TOOL GUYS LLC.  </td>
+					<td style="font-size:10px"><b>TAX</b></td>
+					<td style="background: #e8f1ff;" class="totalcount">0.00</td>
+				</tr>
+				<tr style="height: 20px;">
+					<td colspan="3" style="font-size:10px;"><b>3:</b>PLEASE INCLUDE INVOICE NUMBER ON CHECK.  </td>
+					<td style="font-size:10px"><b>FRT</b></td>
+					<td style="background: #e8f1ff;" class="totalcount">24.25</td>
+				</tr>
+				<tr style="height: 20px;">
+					<td colspan="3" style="font-size:10px;"><b>4:</b>HOW TO CLAIM YOUR $100? GO TO https://buy.stripe.com/eVaaFccyp5Luca428a
+AND SIMPLY PAY YOUR INVOICE USING THIS LINK AT LEAST 1 DAY EARLY AND YOUR ACCOUNT WILL
+AUTOMATICALLY GAIN $100 SPENDING CREDIT FOR ANY FUTURE ORDER!. </td>
+					<td style="font-size:10px"><b>HH</b></td>
+					<td style="background: #e8f1ff;" class="totalcount">9.00</td>
+				</tr>
+				<tr style="height: 20px;">
+					<td colspan="3" style="font-size:10px;"> </td>
+					<td style="font-size:10px"><b>TOTAL</b></td>
+					<td style="background: #e8f1ff;" >$<span id="grandtotal"> </span></td>
+				</tr>
+			</table>
+			<center style="background-color: #f3f3a2;">
+				<p style="font-size:12px"><b>PAY EARLY, GET REWARDED!</b></p>
+				<p style="font-size:12px"><b> GET 10% OFF WHEN YOU PAY WITHIN 2 DAYS OF DELIVERY - 5% OFF WHEN YOU PAY WITHIN 7 DAYS OF DELIVERY!</b></p>
+				<p style="font-size:10px">EARLY PAYMENT REWARDS = DISCOUNT + $100 STORE CREDIT FOR ANY FUTURE PURCHASE WITH THE TOOL GUYS LLC™ - ON OVER 40,000 ITEMS!</p>
+				<p style="font-size:10px"><b>FOR PAYMENTS CALL 800-791-7136 OR TEXT YOUR INVOICE NUMBER TO 360-203-6151 TO RECEIVE A QUICK-PAY LINK.<hr></b></p>
+			</center>
+			<center>
+				<p style="font-size:10px;margin-top: 6px;">PLEASE CONTACT US WITHIN 14 DAYS OF DELIVERY FOR EXCHANGES OR DAMAGE CLAIMS.</p>
+				<p style="font-size:10px">RETURNS FOR UNDAMAGED AND UNUSED PRODUCTS ARE AUTHORIZED FOR ANY REASON AS LONG AS YOUR REQUEST IS DOCUMENTED WITHIN 7 DAYS OF DELIVERY.</p>
+				<p><b>Thank You For Your Business!</b></p>
+				<p><b style="font-size:10px;">SURE IS COOL TO BE A TOOL!</b></p>
+			</center>
+		</div>
+	</div>
+</body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+ var sum = 0;
+$('#item td span.subtotalcount').each(function() {
+    var num = parseFloat($(this).html());  
+    if (!isNaN(num)) {
+        sum += num;
+		
+    }
+});
+$(".subtotal").text(String("$ "+parseFloat(sum)));
+$(".inputsubtotal").val(String(parseFloat(sum)));
+
+ var sum1 = 0;
+$('#item td.totalcount').each(function() {
+    var num1 = parseInt($(this).html()); 
+	
+    if (!isNaN(num1)) {
+        sum1+= num1;
+	}
+});
+var b = parseFloat(sum1)+parseFloat($(".inputsubtotal").val());
+if (String(b).includes("."))
+{
+$("#grandtotal").text(String(b)+"");
+}else{
+	$("#grandtotal").text(String(b)+".00");
+}
+
+//count grand total
+</script>
+</html>

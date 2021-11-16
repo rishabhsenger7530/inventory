@@ -5,8 +5,9 @@ from weasyprint import HTML
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.contrib import messages
-from .models import User, Sales,Product,OrderProduct,Followupnotes
+from .models import UserProfile, Sales,Product,OrderProduct,Followupnotes
 from .form import Usersignupform
+from django.contrib.auth.models import User
 from django.conf import settings 
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login 
@@ -76,9 +77,10 @@ def create_sales(request):
                 email         = request.POST['email'],
                 created_by    = data
             )
-            #a =sales.save()
+            a =sales.save()
 
             sales_id  = Sales.objects.latest('id')
+          
 
             qty               = request.POST.getlist('qty[]')
             item              = request.POST.getlist('item[]')
@@ -88,51 +90,46 @@ def create_sales(request):
             extended_total    = request.POST.getlist('extended_total[]')
             
             for i in range(len(qty)):
-                
-                # sales   =OrderProduct(
-                #     sale             = sales_id,
-                #     quantity         = qty[i],
-                #     item             = item[i],
-                #     ou               = ou[i],
-                #     production_desc  = product_dec[i],
-                #     unitprice        = unit_price[i],
-                #     extend           = extended_total[i]
-                #     )
-                # sales.save()
-            #send email
-                
-                #get product name
                 product   = Product.objects.get(id=item[i])
-                
+                sales   =OrderProduct(
+                    sale             = sales_id,
+                    quantity         = qty[i],
+                    item             = product,
+                    ou               = ou[i],
+                    production_desc  = product_dec[i],
+                    unitprice        = unit_price[i],
+                    extend           = extended_total[i]
+                    )
+                sales.save()
 
                 
-                context = {
-                    "ITEM": product.item,
-                    "DESCRIPTION": product_dec[i],
-                    "QTY": qty[i],
-                    "UNITPRICE": unit_price[i],
-                    "EXTENDEDPRICE": extended_total[i],
+                # context = {
+                #     "ITEM": product.item,
+                #     "DESCRIPTION": product_dec[i],
+                #     "QTY": qty[i],
+                #     "UNITPRICE": unit_price[i],
+                #     "EXTENDEDPRICE": extended_total[i],
 
-                }
+                # }
 
-                totalprice =totalprice+ int(extended_total[i])
-                context_list.append(context)
-                template = get_template('invoice.html')
+                # totalprice =totalprice+ int(extended_total[i])
+                # context_list.append(context)
+                # template = get_template('invoice.html')
 
 
             # context = { "name": 'Hello', }
-            html_string = render_to_string('invoice.html', {'context':context_list,'terms':request.POST['terms'], 'user':user, 'totalprice':totalprice})
-            html = HTML(string=html_string)
-            buffer = io.BytesIO()
-            html.write_pdf(target=buffer)
-            pdf = buffer.getvalue()
+            # html_string = render_to_string('invoice.html', {'context':context_list,'terms':request.POST['terms'], 'user':user, 'totalprice':totalprice})
+            # html = HTML(string=html_string)
+            # buffer = io.BytesIO()
+            # html.write_pdf(target=buffer)
+            # pdf = buffer.getvalue()
 
-            filename = 'Invoice.pdf'
-            to_emails = [request.POST['email'],]
-            subject = "From CliMan"
-            email = EmailMultiAlternatives(subject, "helloji", from_email="rishabhsenger7530@gmail.com", to=to_emails)
-            email.attach(filename, pdf, "application/pdf")
-            email.send(fail_silently=False)
+            # filename = 'Invoice.pdf'
+            # to_emails = [request.POST['email'],]
+            # subject = "From CliMan"
+            # email = EmailMultiAlternatives(subject, "helloji", from_email="rishabhsenger7530@gmail.com", to=to_emails)
+            # email.attach(filename, pdf, "application/pdf")
+            # email.send(fail_silently=False)
             messages.info(request,"Data Submitted Successfully")
 
 
@@ -146,23 +143,17 @@ def signup(request):
     form = Usersignupform()
     if request.method=="POST":
         form = Usersignupform(request.POST)
-        
-        #print(form,"formformformform")
         if form.is_valid():
-            
             username = form.cleaned_data['email']
             if User.objects.filter(email=username).exists():
                 messages.info(request,"Email already taken")
             else:
-                form.save() 
-                print("******************************")
-                # instance.username = username
-                # instance.save()
+                user = form.save(commit=False)
+                user.set_password(form.cleaned_data['password1'])
+                user.save()
                 messages.info(request,"Data Submitted Successfully")
         else:
             form = Usersignupform(request.POST)
-    
-    
     return render(request,'sign-up.html',{'form':form})
 
 
@@ -171,12 +162,8 @@ def login_req(request):
         return redirect('/')
     else:
         if request.method == "POST":
-            print("**************")
-            
-               
             username = request.POST['username']
             password = request.POST['password']
-            
             user = authenticate(username=username, password=password)
             print(username,password,"wwewew",user)
             if user is not None:
@@ -191,49 +178,20 @@ def login_req(request):
 
 
 
-def sendSimpleEmail(request):
-    
-
-     # Rendered
-    template = get_template('data-tables.html')
-    context = {
-        "billno": "bill_num",
-        "billdate": "bill_date",
-        "patientname": "patient_name",
-        "totalbill": "total_bill",
-        "billprocedure": "invoice_cal",
-
-    }
-
-    context = { "name": 'Hello', }
-    html_string = render_to_string('data-tables.html', context)
-    html = HTML(string=html_string)
-    buffer = io.BytesIO()
-    html.write_pdf(target=buffer)
-    pdf = buffer.getvalue()
-
-    filename = 'Invoice.pdf'
-    s = 'rishabhsenger7530@gmail.com'
-    to_emails = [s,]
-    subject = "From CliMan"
-    email = EmailMultiAlternatives(subject, "helloji", from_email="rishabhsenger7530@gmail.com", to=to_emails)
-    email.attach(filename, pdf, "application/pdf")
-    email.send(fail_silently=False)
 
 
 
 
-    return redirect('/')
+
+
+
 
 
 def myorder(request):
     if request.user.is_authenticated and  User.objects.filter(pk=request.user.id, groups__name='sales').exists():
-        # cursor = connection.cursor()
         today = date.today()
-        print(today,"csdsdsd")
-        sql = Sales.objects.raw('''
-              SELECT tp.id, tp.b_firmname, tp.b_buyer, tp.b_purchase_order, tp.email, tp.contact1, tp.b_date FROM testapp_Sales as tp 
-              where  payment_due_date >= %s ''',  [today])
+        sql = Sales.objects.filter(payment_due_date__gt=today, created_by=request.user)
+        
         collection_perm = User.objects.filter(pk=request.user.id, groups__name='collection').exists()
         sales_perm = User.objects.filter(pk=request.user.id, groups__name='sales').exists()
         return render(request,'all_order.html',{'sales':sql, 'user_perm':collection_perm,'sales_perm':sales_perm})
@@ -241,14 +199,22 @@ def myorder(request):
         return redirect('/login')
 
 
+
+
+
+
+
+
+
+
+
 def managefollowup(request):
     if request.user.is_authenticated and  User.objects.filter(pk=request.user.id, groups__name='collection').exists():
-        # cursor = connection.cursor()
+        
         today = date.today()
-        print(today,"csdsdsd")
-        sql = Sales.objects.raw('''
-              SELECT tp.id, tp.b_firmname, tp.b_buyer, tp.b_purchase_order, tp.email, tp.contact1, tp.b_date FROM testapp_Sales as tp 
-              where  payment_due_date < %s''',  [today])
+        
+        sql = Sales.objects.filter(payment_due_date__lt=today)
+        
 
         collection_perm = User.objects.filter(pk=request.user.id, groups__name='collection').exists()
         sales_perm = User.objects.filter(pk=request.user.id, groups__name='sales').exists()
@@ -262,31 +228,12 @@ def managefollowup(request):
 
 def vieworder(request, pk):
     if request.user.is_authenticated :
-        cursor = connection.cursor()
-        today = date.today()
+        sql = Sales.objects.get(pk=pk)
+        product_order = OrderProduct.objects.filter(sale=sql)
         
-        sql = Sales.objects.raw('''
-              SELECT tp.* FROM testapp_Sales as tp
-              where  tp.id = %s''',  [pk])
-        for i in sql:
-            print(i)
-
-        sql1 = cursor.execute('''
-              SELECT op.*,p.* FROM testapp_Sales as tp
-              join testapp_OrderProduct as op using(id)
-              join  testapp_Product as p using(id)
-              where tp.id <= %s''',  [pk])
-              
-        all_product = Product.objects.all()
-        itemid   = []
-        itemname = []
-        for i in all_product:
-            itemid.append(i.id)
-            itemname.append(i.item)
-        mylist = zip(itemid, itemname)
         collection_perm = User.objects.filter(pk=request.user.id, groups__name='collection').exists()
         sales_perm = User.objects.filter(pk=request.user.id, groups__name='sales').exists()
-        return render(request,'view-sales.html',{'sales':sql,'product':sql1,'mylist':mylist,'user_perm':collection_perm,'sales_perm':sales_perm})
+        return render(request,'view-sales.html',{'sales':sql,'product':product_order,'user_perm':collection_perm,'sales_perm':sales_perm})
 
     else:
         return redirect('/login')
@@ -296,51 +243,58 @@ def followup(request, pk):
     if request.user.is_authenticated :
         collection_perm = User.objects.filter(pk=request.user.id, groups__name='collection').exists()
         sales_perm = User.objects.filter(pk=request.user.id, groups__name='sales').exists()
+        saledata=Sales.objects.get(id=pk)
+        
         if request.method=="POST":
-            saledata=Sales.objects.get(id=pk)
+            
             data = Followupnotes(
                 sale    = saledata,
-                content = request.POST['addnotes']
+                content = request.POST['addnotes'],
+                followupdate = request.POST['date']
                 )
             data.save()
+            saledata.followupdate = request.POST['date']
+            saledata.save()
+            print(request.POST['date'],"request.POST['date']")
 
-        cursor = connection.cursor()
-        today = date.today()
-        
-        sql = Sales.objects.raw('''
-              SELECT tp.* FROM testapp_Sales as tp
-              where  tp.id = %s''',  [pk])
-        for i in sql:
-            print(i)
 
-        sql1 = cursor.execute('''
-              SELECT op.*,p.* FROM testapp_Sales as tp
-              join testapp_OrderProduct as op using(id)
-              join  testapp_Product as p using(id)
-              where tp.id <= %s''',  [pk])
-              
-        all_product = Product.objects.all()
-        itemid   = []
-        itemname = []
-        for i in all_product:
-            itemid.append(i.id)
-            itemname.append(i.item)
-        mylist = zip(itemid, itemname)
         
+        sql = Sales.objects.get(pk=pk)
+        print(sql.followupdate ,"saledata.followupdate ****")
         #fetch notes
-        followupdata = Followupnotes.objects.all()
-        return render(request,'followup.html',{'sales':sql,'product':sql1,'mylist':mylist,'followupdata':followupdata,'user_perm':collection_perm,'sales_perm':sales_perm})
+        followupdata = Followupnotes.objects.filter(sale=saledata)
+        return render(request,'followup.html',{'sales':sql,'followupdata':followupdata,'user_perm':collection_perm,'sales_perm':sales_perm})
 
     else:
         return redirect('/login')
+
+
+
+def generateinvoice(request, pk):
+    if request.user.is_authenticated :
+        collection_perm = User.objects.filter(pk=request.user.id, groups__name='collection').exists()
+        sales_perm = User.objects.filter(pk=request.user.id, groups__name='sales').exists()
+        saledata = Sales.objects.get(pk=pk)
+        product_order = OrderProduct.objects.filter(sale=saledata)
+
+        today = date.today()
+        return render(request,'generateinvoice.html',{'today':today,'sales':saledata,'product_order':product_order,'user_perm':collection_perm,'sales_perm':sales_perm})
+
+    else:
+        return redirect('/login')
+
+
 
 #see all users
 def fetchitems(request):
     if request.method=="POST":
         id = request.POST['option']
-        all_product = Product.objects.filter(id=id).values()# if request.user.has_perm('testapp.can_add_cost_price'):
-        print(all_product)
+        all_product = Product.objects.filter(id=id).values()
+        
         return JsonResponse({"models_to_return": list(all_product)})
+
+
+
 
 
 

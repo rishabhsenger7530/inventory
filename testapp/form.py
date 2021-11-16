@@ -10,9 +10,9 @@ class Usersignupform(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=False, help_text='Optional',widget=forms.TextInput(attrs={'class':'form-control form-control-lg','placeholder':"Enter First Name", 'autocomplete':'off'}))
     last_name  = forms.CharField(max_length=30, required=False, help_text='Optional',widget=forms.TextInput(attrs={'class':'form-control form-control-lg','placeholder':"Enter Last Name", 'autocomplete':'off'}))
     email      = forms.EmailField(max_length=254, help_text='Enter a valid email address' ,widget=forms.TextInput(attrs={'class':'form-control form-control-lg','placeholder':"Enter Your Email", 'autocomplete':'off'}))
-    contact    = forms.CharField(max_length=10, help_text='Enter a valid contact ',widget=forms.TextInput(attrs={'class':'form-control form-control-lg','placeholder':"Enter Contact", 'autocomplete':'off'}))
-    # password1    = forms.CharField(max_length=10, help_text='Enter  valid Password ',widget=forms.PasswordInput(attrs={'class':'form-control form-control-lg','placeholder':"*****", 'autocomplete':'off'}))
-    # password2    = forms.CharField(max_length=10, help_text='Enter  valid Confirm Password ',widget=forms.PasswordInput(attrs={'class':'form-control form-control-lg','placeholder':"*****", 'autocomplete':'off'}))
+    #contact    = forms.CharField(max_length=10, help_text='Enter a valid contact ',widget=forms.TextInput(attrs={'class':'form-control form-control-lg','placeholder':"Enter Contact", 'autocomplete':'off'}))
+    password1    = forms.CharField(max_length=10, help_text='Enter  valid Password ',widget=forms.PasswordInput(attrs={'class':'form-control form-control-lg','placeholder':"*****", 'autocomplete':'off'}))
+    password2    = forms.CharField(max_length=10, help_text='Enter  valid Confirm Password ',widget=forms.PasswordInput(attrs={'class':'form-control form-control-lg','placeholder':"*****", 'autocomplete':'off'}))
     class Meta:
         model = User
         fields = [
@@ -20,7 +20,7 @@ class Usersignupform(UserCreationForm):
             'first_name', 
             'last_name', 
             'email', 
-            'contact',
+           
             'password1', 
             'password2', 
             ]
@@ -29,6 +29,16 @@ class Usersignupform(UserCreationForm):
                 #'password1': forms.PasswordInput(attrs={'class':'form-control form-control-lg','placeholder':"********", 'autocomplete':'off'}),
                 
         }
+    # def clean(self):
+    #     cleaned_data = super(Usersignupform, self).clean()
+    #     password = cleaned_data.get("password1")
+    #     confirm_password = cleaned_data.get("password2")
+        
+
+    #     if password != confirm_password:
+    #         raise forms.ValidationError(
+    #             "password and confirm_password does not match"
+    #         )
 
 
 

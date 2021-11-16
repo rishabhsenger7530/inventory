@@ -1,14 +1,24 @@
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
+from datetime import datetime
+from django.utils.translation import gettext as _
 import datetime
+
+# from testapp.views import followup
 # from datetime import date
 CHOICES = (
         ('A', 'Admin'),
         ('S', 'Sales'),
         ('C', 'Collection'),
     )
-class User(User):
+
+
+class UserProfile(models.Model):
+    userid      = models.ForeignKey(User, on_delete=models.CASCADE)
+    # first_name  = models.CharField(max_length=250)
+    # last_name   = models.CharField(max_length=250)
+    # email       = models.EmailField(max_length=100)
     usertype    = models.CharField(max_length=1,choices=CHOICES)
     contact     = models.BigIntegerField()
     sales_code  = models.CharField(max_length=6,default="123454")
@@ -37,7 +47,8 @@ class Sales(models.Model):
     contact2      = models.CharField(max_length=250, blank=True)
     email         = models.CharField(max_length=250, blank=True)
     payment_due_date = models.DateField(null=True)
-    #created_by    = models.ForeignKey(User,default="b@gmail.com", on_delete=models.CASCADE)
+    followupdate      = models.DateField(default=datetime.date.today, null=True, blank=True)
+    created_by    = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         if self.payment_due_date is None:
@@ -49,7 +60,9 @@ class Sales(models.Model):
 class Product(models.Model):
     item              = models.CharField(max_length=250)
     production_desc   = models.CharField(max_length=250)
-    unitprice         = models.CharField(max_length=250)
+    unitprice         = models.DecimalField(max_digits = 10,decimal_places = 2)
+
+    
     
 
 class OrderProduct(models.Model):
@@ -58,15 +71,17 @@ class OrderProduct(models.Model):
     item              = models.ForeignKey(Product,default="1",on_delete=models.CASCADE)
     ou                = models.CharField(max_length=250)
     production_desc   = models.CharField(max_length=250)
-    unitprice         = models.CharField(max_length=250)
-    extend            = models.CharField(max_length=250)
+    unitprice         = models.DecimalField(max_digits = 10,decimal_places = 2)
+    extend            = models.DecimalField(max_digits = 10,decimal_places = 2)
 
 
 
 
 class Followupnotes(models.Model):
-    sale              = models.ForeignKey(Sales,default="b@gmail.com",on_delete=models.CASCADE)
+    sale              = models.ForeignKey(Sales,on_delete=models.CASCADE)
     content           = models.TextField()
+    followupdate      = models.DateField(default=datetime.date.today, null=True, blank=True)
+    
     date              = models.DateField()
 
     def save(self, *args, **kwargs):

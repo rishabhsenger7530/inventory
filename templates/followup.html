@@ -8,6 +8,7 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="page-header">
                     <h2 class="pageheader-title">Followup Orders </h2>
+                 
                     <p class="pageheader-text"></p>
                     <div class="page-breadcrumb">
                         <nav aria-label="breadcrumb">
@@ -30,16 +31,22 @@
             <!-- ============================================================== -->
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="card">
-                    <h5 class="card-header">Followup Order</h5> {% for message in messages%}
+                    <h5 class="card-header">
+                    <span>Followup Order</span>
+                   
+                    </h5>
+                  
+                     {% comment %} <h5 class="text-right">Followup Order</h5> {% endcomment %}
+                     {% for message in messages%}
                     <h3 align="center" style="color: red;">{{message}}</h3> {% endfor %}
-                    <div class="card-body"> {% for i in sales%}
+                    <div class="card-body"> 
                         <div class="form-row">
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
                                 <label for="validationCustom03">Firm</label>
-                                <input type="text" class="form-control" name="b_firm" id="b_firm" placeholder="Firm" value="{{i.b_firmname}}" readonly> </div>
+                                <input type="text" class="form-control" name="b_firm" id="b_firm" placeholder="Firm" value="{{sales.b_firmname}}" readonly> </div>
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
-                                <label for="validationCustom03">Firm</label>
-                                <input type="text" class="form-control" name="b_address" id="b_address" value="{{i.b_addr1}}- {{i.b_zip}}, {{i.b_city}}, {{i.b_state}}- {{i.b_country}}" placeholder="Address1" readonly>
+                                <label for="validationCustom03">Address</label>
+                                <input type="text" class="form-control" name="b_address" id="b_address" value="{{sales.b_addr1}}- {{sales.b_zip}}, {{sales.b_city}}, {{sales.b_state}}- {{sales.b_country}}" placeholder="Address1" readonly>
                                 <br> </div>
                         </div>
                         <hr>
@@ -48,32 +55,44 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="validationCustom03">Date</label>
-                                        <input type="text" class="form-control" name="date" id="validationCustom03" placeholder="Date" value="{{i.b_date}}" readonly>
+                                        <input type="text" class="form-control" name="date" id="validationCustom03" placeholder="Date" value="{{sales.b_date}}" readonly>
                                         <label for="validationCustom03">Purchase Order</label>
-                                        <input type="text" class="form-control" name="purchase_order" id="validationCustom03" placeholder="Buyer" readonly value="{{i.b_purchase_order}}" readonly> </div>
+                                        <input type="text" class="form-control" name="purchase_order" id="validationCustom03" placeholder="Buyer" readonly value="{{sales.b_purchase_order}}" readonly> </div>
                                     <div class="col-md-6">
                                         <label for="validationCustom03">Buyer</label>
-                                        <input type="text" class="form-control" name="buyer" id="validationCustom03" placeholder="Buyer" value="{{i.b_buyer}}" readonly>
+                                        <input type="text" class="form-control" name="buyer" id="validationCustom03" placeholder="Buyer" value="{{sales.b_buyer}}" readonly>
                                         <label for="validationCustom03">Terms</label>
-                                        <input type="text" class="form-control" name="terms" id="validationCustom03" placeholder="Terms" value="{{i.b_tirms}}" readonly> </div>
+                                        <input type="text" class="form-control" name="terms" id="validationCustom03" placeholder="Terms" value="{{sales.b_tirms}}" readonly> </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="validationCustom03">Main Tel.</label>
-                                        <input type="text" class="form-control" name="main_tel" id="validationCustom03" placeholder="Mail Tel." value="{{i.contact1}}" readonly>
+                                        <input type="text" class="form-control" name="main_tel" id="validationCustom03" placeholder="Mail Tel." value="{{sales.contact1}}" readonly>
                                         <label for="validationCustom03">Email</label>
-                                        <input type="text" class="form-control" name="email" id="validationCustom03" placeholder="Email" value="{{i.email}}" readonly> </div>
+                                        <input type="text" class="form-control" name="email" id="validationCustom03" placeholder="Email" value="{{sales.email}}" readonly> </div>
                                     <div class="col-md-6">
                                         <label for="validationCustom03">Alt Tel.</label>
-                                        <input type="text" class="form-control" name="alt_tel" id="validationCustom03" placeholder="Alt Tel." value="{{i.contact2}}" readonly> </div>
+                                        <input type="text" class="form-control" name="alt_tel" id="validationCustom03" placeholder="Alt Tel." value="{{sales.contact2}}" readonly> </div>
                                 </div>
                             </div>
-                        </div> {% endfor %}
+                        </div> 
                         <hr>
                         <br>
-                        <h2>All Notes</h2>
+                        <div class="row">
+                        <div class="col-md-3 mt-2">
+                         <h2>All Notes</h2>
+                        </div>
+                        <div class="col-md-6 mt-2"></div>
+                        <div class="col-md-3 mt-2">
+                        <h3>Next Followup Date</h3>
+                        <h2 style="text-align:right" class="btn btn-danger btn-lg">{{sales.followupdate}}</h2>
+                        </div>
+                        </div>
+                       
+                       
+                        
                         <hr>
 
                         <div class="row">
@@ -89,15 +108,21 @@
                             
                         </div>
                         <br>
-<h2>All Notes</h2>
+<h2>Add Notes</h2>
 <hr>
                     <form action="" method="post">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-6">
+                             <label>Add Notes</label>
                                 <textarea class="form-control" name="addnotes" required></textarea>
                             </div>
-                            <div class="col-md-3">
-                                <input type="submit" class="btn btn-primary btn-lg form-control" value="Add Notes"> </div>
+                             <div class="col-md-3">
+                             <label>Next follow up Date</label>
+                                <input type="date" class="form-control" id="txtDate" name="date" required> </div>
+                        
+                          
+                            <div class="col-md-3"><br>
+                          <input type="submit" class="btn btn-primary btn-lg form-control" value="Add Notes"> </div>
                         </div>
                     </form>
 
@@ -113,4 +138,25 @@
         <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script> -->
         <!-- ============================================================== -->
         <!-- footer -->
-        <!-- ============================================================== -->{%endblock%}
+        <!-- ============================================================== -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+       <script>
+       $(function(){
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var maxDate = year + '-' + month + '-' + day;
+
+    $('#txtDate').attr('min', maxDate);
+});
+       </script> 
+        
+        {%endblock%}

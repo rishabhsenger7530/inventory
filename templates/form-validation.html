@@ -49,7 +49,7 @@
                                     <div class="invalid-feedback"> Please provide a valid Address1. </div>
                                     <br>
                                     <label for="validationCustom03">Address2</label>
-                                    <input type="text" class="form-control" name="b_address2" id="b_address2" placeholder="City" required>
+                                    <input type="text" class="form-control" name="b_address2" id="b_address2" placeholder="Address2" required>
                                     <div class="invalid-feedback"> Please provide a valid Address2. </div>
                                     <br>
                                     <label for="validationCustom03">City</label>
@@ -80,7 +80,7 @@
                                     <div class="invalid-feedback"> Please provide a valid Address1. </div>
                                     <br>
                                     <label for="validationCustom03">Address2</label>
-                                    <input type="text" class="form-control" name="s_address2" id="s_address2" placeholder="City" >
+                                    <input type="text" class="form-control" name="s_address2" id="s_address2" placeholder="Address2" >
                                     <div class="invalid-feedback"> Please provide a valid Address2. </div>
                                     <br>
                                     <label for="validationCustom03">City</label>
@@ -106,7 +106,7 @@
                                         <label for="validationCustom03">Date</label>
                                         <input type="date" class="form-control" name="date" id="validationCustom03" placeholder="Date" required>
                                         <label for="validationCustom03">Purchase Order</label>
-                                        <input type="text" class="form-control" name="purchase_order" id="validationCustom03" placeholder="Buyer" required> </div>
+                                        <input type="text" class="form-control" name="purchase_order" id="validationCustom03" placeholder="Purchase Order" required> </div>
                                     <div class="col-md-6">
                                         <label for="validationCustom03">Buyer</label>
                                         <input type="text" class="form-control" name="buyer" id="validationCustom03" placeholder="Buyer" required>
@@ -146,11 +146,12 @@
                         </div>
                         <div class="col-md-3">
                             <label for="validationCustom03">Product Description</label>
-                            <input type="text" class="form-control" name="product_desc[]" id="product_desc" placeholder="Product Description" readonly required>
+                            <input type="text" class="form-control" name="product_desc[]" id="product_desc" placeholder="Product Description"  readonly required>
                         </div>
                            <div class="col-md-2">
                             <label for="validationCustom03">Unit Price</label>
-                            <input type="text" class="form-control" name="unit_price[]" id="unit_price" placeholder="Unit Price" required readonly>
+                            <input type="text" class="form-control" name="unit_price[]" id="unit_price0" placeholder="Unit Price" required onkeyup="changeprice(0)">
+                            <input type="hidden" class="form-control"  id="hiddenunit_price0" placeholder="Unit Price" required >
                         </div>
                        
                         <div class="col-md-1">
@@ -160,7 +161,7 @@
                         
                          <div class="col-md-2">
                             <label for="validationCustom03">O/U</label>
-                            <input type="text" class="form-control" name="ou[]" id="validationCustom03" placeholder="O/U" required>
+                            <input type="text" class="form-control" name="ou[]" id="ou0" placeholder="O/U" required>
                         </div>
                         
                      
@@ -212,7 +213,7 @@
             <!-- ============================================================== -->
         </div>
     </div>
-    {{itemname}}
+
 <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script> -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -258,15 +259,15 @@
                       
                     </div>&nbsp;&nbsp;
                     <div class="form-group mt-3 d-flex">
-                        <input type="text" id="unit_price${count}" name="unit_price[]" placeholder="Unit Price" class="form-control" required>
-                      
+                        <input type="text" id="unit_price${count}" name="unit_price[]" placeholder="Unit Price" class="form-control" required onkeyup="changeprice(${count})">
+                       <input type="hidden" id="hiddenunit_price${count}" name="unit_price[]" placeholder="Unit Price" class="form-control" required>
                     </div>&nbsp;&nbsp;
                      <div class="form-group mt-3 d-flex">
                         <input type="text" id="qty${count}" name="qty[]" placeholder="Qty." class="form-control" required onkeyup="counttotal(${count})">
                       
                     </div>&nbsp;&nbsp;
                     <div class="form-group mt-3 d-flex">
-                        <input type="text" id="course_headline" name="ou[]" placeholder="O/U" class="form-control" required>
+                        <input type="text" id="ou${count}" name="ou[]" placeholder="O/U" class="form-control" required>
                       
                     </div>&nbsp;&nbsp;
                    
@@ -303,7 +304,8 @@ $('.selectitem').on('change', function(e) {
         })
         .done(function(data) {
          document.getElementById('product_desc').value=data['models_to_return'][0]['production_desc']
-         document.getElementById('unit_price').value=data['models_to_return'][0]['unitprice']
+         document.getElementById('unit_price0').value=data['models_to_return'][0]['unitprice']
+         document.getElementById('hiddenunit_price0').value=data['models_to_return'][0]['unitprice']
        
       });
           });   
@@ -320,13 +322,14 @@ $('.selectitem').on('change', function(e) {
         .done(function(data) {
          document.getElementById('product_desc'+argument).value=data['models_to_return'][0]['production_desc']
          document.getElementById('unit_price'+argument).value=data['models_to_return'][0]['unitprice']
+         document.getElementById('hiddenunit_price'+argument).value=data['models_to_return'][0]['unitprice']
        
       });
        }  
 
 
 $("#qty").keyup(function(){
-  unitprice = $('#unit_price').val();
+  unitprice = $('#unit_price0').val();
   qty       = $(this).val();
   var total = unitprice*qty;
   document.getElementById('extended_total').value = total;
@@ -380,6 +383,17 @@ function checkbox(checkbox) {
       document.getElementById('s_country').value='';
       
     }
+}
+
+
+function changeprice(argument){
+
+  unitprice             = $('#unit_price'+argument).val();
+  hiddenunitprice       = $('#hiddenunit_price'+argument).val();
+ 
+  var total = hiddenunitprice-unitprice;
+  document.getElementById('ou'+argument).value = total;
+
 }
 </script>
 
